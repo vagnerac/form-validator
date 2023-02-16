@@ -9,7 +9,13 @@ interface FormParameters {
   errorSpan: HTMLSpanElement;
 }
 
-export class Validator implements FormParameters {
+interface FormMethods {
+  createErrorMessage(currentElement: HTMLInputElement, errorMsg: string): void;
+  processHandler(): void;
+  validateFields(): void;
+}
+
+export class FormValidator implements FormParameters, FormMethods {
   form: HTMLFormElement;
   username: HTMLInputElement;
   email: HTMLInputElement;
@@ -29,6 +35,9 @@ export class Validator implements FormParameters {
       '.error-message',
     ) as HTMLSpanElement;
   }
+  changePreventDefault(): void {
+    throw new Error('Method not implemented.');
+  }
   createErrorMessage(currentElement: HTMLInputElement, errorMsg: string): void {
     const parentTag = currentElement.parentElement;
     if (parentTag) parentTag.classList.add(this.SHOW_ERROR_MESSAGE);
@@ -36,7 +45,7 @@ export class Validator implements FormParameters {
     span.innerText = errorMsg;
   }
 
-  changePreventDefault(): void {
+  processHandler(): void {
     this.form.addEventListener('submit', (event) => {
       event.preventDefault();
       this.clearErrorMessages();
@@ -72,5 +81,5 @@ export class Validator implements FormParameters {
   }
 }
 
-const validator = new Validator();
-validator.changePreventDefault();
+const formValidator = new FormValidator();
+formValidator.processHandler();
