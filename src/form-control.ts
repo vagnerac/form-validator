@@ -35,9 +35,6 @@ export class FormValidator implements FormParameters, FormMethods {
       '.error-message',
     ) as HTMLSpanElement;
   }
-  changePreventDefault(): void {
-    throw new Error('Method not implemented.');
-  }
   createErrorMessage(currentElement: HTMLInputElement, errorMsg: string): void {
     const parentTag = currentElement.parentElement;
     if (parentTag) parentTag.classList.add(this.SHOW_ERROR_MESSAGE);
